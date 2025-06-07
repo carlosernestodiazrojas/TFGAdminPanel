@@ -1,6 +1,7 @@
 'use client'
 
 import { Condominium } from "@/@types/condominium"
+import ImageGallery from "@/components/image-gallery/ImageGallery"
 import { Button, Card, Tooltip } from "@/components/ui"
 import { PiBuilding, PiPencil, PiPlus, PiTrash } from "react-icons/pi"
 
@@ -14,7 +15,6 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
                     <PiBuilding />
                 </Button>
             </Tooltip>
-
 
             <Tooltip title="Editar">
                 <Button>
@@ -33,11 +33,9 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
     )
 
     const cardHeader = (
-        <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-60 w-full">
-            <img
-                src="/img/no-image/3.jpg"
-                alt="card header"
-                className="absolute inset-0 w-full h-full object-cover"
+        <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-50 w-full">
+            <ImageGallery
+                images={condominium.imagesUrls}
             />
         </div>
     )

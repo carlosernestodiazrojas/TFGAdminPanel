@@ -5,4 +5,6 @@ export type Condominium = {
     description: string
     address: string
     is_deleted: boolean
+    images: string[]
+    imagesUrls: string[]
 }
