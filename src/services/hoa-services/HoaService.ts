@@ -1,5 +1,4 @@
 
-import { GetByIdParam } from '@/@types/common'
 import ApiService from '../ApiService'
 
 import { NestApiResponse } from '@/@types/nest-api-response'
