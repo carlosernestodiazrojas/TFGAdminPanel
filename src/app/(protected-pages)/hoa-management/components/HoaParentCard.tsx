@@ -3,6 +3,7 @@
 import Card from '@/components/ui/Card'
 import { Hoa } from '@/@types/hoa'
 import HoaInformationTabs from './HoaInformationTabs'
+import ImageGallery from '@/components/image-gallery/ImageGallery'
 
 const HoaParentCard = ({
     hoa
@@ -20,10 +21,8 @@ const HoaParentCard = ({
 
     const cardHeader = (
         <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-75 w-full">
-            <img
-                src="/img/no-image/3.jpg"
-                alt="card header"
-                className="absolute inset-0 w-full h-full object-cover"
+            <ImageGallery
+                images={hoa.imagesUrls}
             />
         </div>
     )
