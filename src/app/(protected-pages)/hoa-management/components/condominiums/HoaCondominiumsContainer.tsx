@@ -5,7 +5,7 @@ import { getCondominiumsByHoaId } from "../../actions"
 import { useEffect, useState, useTransition } from "react"
 import { Condominium } from "@/@types/condominium"
 import { HoaCondominiumCard } from "./HoaCondominiumCard"
-import { CustomLoader } from "@/components/custom-loader"
+import { CustomLoaderDeeper } from "@/components/custom-loader"
 
 export const HoaCondominiumsContainer = ({
     hoa
@@ -14,7 +14,6 @@ export const HoaCondominiumsContainer = ({
 }) => {
 
     const [isLoading, startTransition] = useTransition()
-    const [isLoaded, setIsLoaded] = useState<boolean>(false)
 
     const [condominiumsData, setCondominiumsData] = useState<Condominium[]>([])
 
@@ -30,16 +29,14 @@ export const HoaCondominiumsContainer = ({
                     setCondominiumsData([])
                 })
                 .finally(() => {
-                    setIsLoaded(true)
                 })
         })
 
     }, [])
 
     return (
-
         <div className="flex space-x-4">
-            {isLoading && <CustomLoader />}
+            {isLoading && <CustomLoaderDeeper />}
             {condominiumsData.map((condominium) => {
                 return <HoaCondominiumCard
                     key={condominium.id}

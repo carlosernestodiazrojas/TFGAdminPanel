@@ -1,7 +1,16 @@
+import PropertiesTable from "./table/PropertiesTable"
 
-
-export const PropertiesContainer = () => {
+export const PropertiesContainer = (
+    {
+        condominiumId,
+    }:
+        {
+            condominiumId: string
+        }
+) => {
     return (
-        <div>PropertiesContainer</div>
+        <PropertiesTable
+            condominiumId={condominiumId}
+        />
     )
 }
