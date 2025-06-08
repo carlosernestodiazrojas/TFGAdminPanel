@@ -5,7 +5,7 @@ import { Hoa } from "@/@types/hoa"
 import { getHoaById } from "../actions"
 import { Fragment, useEffect, useState, useTransition } from "react"
 import NotFound from "@/components/shared/NotFound"
-import { CustomLoader } from "@/components/custom-loader"
+import { CustomLoaderDeeper } from "@/components/custom-loader"
 import HoaParentCard from "./HoaParentCard"
 
 export const HoaManagementContainer = () => {
@@ -35,7 +35,7 @@ export const HoaManagementContainer = () => {
 
     return (
         <>
-            {isLoading && <CustomLoader />}
+            {isLoading && <CustomLoaderDeeper />}
             {!isLoading && hoaData &&
                 <Fragment>
                     <HoaParentCard hoa={hoaData} />

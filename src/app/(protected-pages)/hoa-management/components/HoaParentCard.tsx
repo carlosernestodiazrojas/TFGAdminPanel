@@ -19,13 +19,20 @@ const HoaParentCard = ({
         </div>
     )
 
-    const cardHeader = (
+    let cardHeader = hoa.imagesUrls.length > 0 ? (
         <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-75 w-full">
             <ImageGallery
                 images={hoa.imagesUrls}
             />
         </div>
-    )
+    ) :
+        (<div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-75 w-full">
+            <img
+                src="/img/no-image/3.jpg"
+                alt="card header"
+                className="absolute inset-0 w-full h-full object-cover"
+            />
+        </div>)
 
     return (
         <div className="w-full">
