@@ -5,6 +5,8 @@ import { getHoaByIdService } from "@/services/hoa-services/HoaService"
 import { getCondominiumByIdService, getCondominiumsByHoaIdService } from "@/services/hoa-services/CondominiumService"
 import { createPropertyOnCondominiumIdService, deletePropertyOnCondominiumService, getPropertiesByCondominiumIdService, updatePropertyOnCondominiumService } from "@/services/hoa-services/PropertyService"
 import { PropertyFormValues } from "./components/properties/form/PropertyForm"
+import { createCommonAreaOnCondominiumIdService, deleteCommonAreaOnCondominiumService, getCommonAreasByCondominiumIdService, updateCommonAreaOnCondominiumService } from "@/services/hoa-services/CommonAreaService"
+import { CommonAreaFormValues } from "./components/common-areas/form/CommonAreaForm"
 
 export async function getHoaById() {
     const response = await getHoaByIdService()
@@ -38,5 +40,26 @@ export async function updatePropertyOnCondominium(propertyId: string, formData: 
 
 export async function deletePropertyOnCondominium(propertyId: string) {
     const response = await deletePropertyOnCondominiumService(propertyId)
+    return response
+}
+
+
+export async function getCommonAreasByCondominiumId(id: string) {
+    const response = await getCommonAreasByCondominiumIdService({ id })
+    return response
+}
+
+export async function createCommonAreaOnCondominiumId(condominiumId: string, formData: CommonAreaFormValues) {
+    const response = await createCommonAreaOnCondominiumIdService(condominiumId, formData)
+    return response
+}
+
+export async function updateCommonAreaOnCondominium(commonAreaId: string, formData: CommonAreaFormValues) {
+    const response = await updateCommonAreaOnCondominiumService(commonAreaId, formData)
+    return response
+}
+
+export async function deleteCommonAreaOnCondominium(commonAreaId: string) {
+    const response = await deleteCommonAreaOnCondominiumService(commonAreaId)
     return response
 }

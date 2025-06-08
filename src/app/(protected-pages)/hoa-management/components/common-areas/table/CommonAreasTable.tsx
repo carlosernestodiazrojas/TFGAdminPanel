@@ -6,13 +6,13 @@ import {
     getFilteredRowModel,
     flexRender,
 } from '@tanstack/react-table'
-import { Property } from '@/@types/property'
+import { CommonArea } from '@/@types/common-area'
 
-import { PropertiesTableColumns } from './PropertiesTableColumns'
-import PropertyDrawer from '../drawer/PropertyDrawer'
+import { CommonAreasTableColumns } from './CommonAreasTableColumns'
+import CommonAreaDrawer from '../drawer/CommonAreaDrawer'
 import { Button, toast } from '@/components/ui'
 import { PiPlus } from 'react-icons/pi'
-import { deletePropertyOnCondominium, getPropertiesByCondominiumId } from '../../../actions'
+import { deleteCommonAreaOnCondominium, getCommonAreasByCondominiumId } from '../../../actions'
 import { CustomLoaderDeep } from '@/components/custom-loader'
 import { BiPencil, BiTrash } from 'react-icons/bi'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
@@ -20,7 +20,7 @@ import Notification from '@/components/ui/Notification'
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
+const CommonAreasTable = ({ condominiumId }: { condominiumId: string; }) => {
 
     const [isLoading, startTransition] = useTransition()
 
@@ -28,27 +28,27 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
 
     const [isOpenDeleteConfirm, setIsOpenDeleteConfirm] = useState<boolean>(false)
 
-    const [propertiesData, setPropertiesData] = useState<Property[]>([])
+    const [commonAreasData, setCommonAreasData] = useState<CommonArea[]>([])
 
-    const [propertySelected, setPropertySelected] = useState<Property | null>(null)
+    const [commonAreaSelected, setCommonAreaSelected] = useState<CommonArea | null>(null)
 
-    const columns = PropertiesTableColumns()
+    const columns = CommonAreasTableColumns()
 
     const table = useReactTable({
-        data: propertiesData,
+        data: commonAreasData,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel()
     })
 
-    const refreshPropertiesData = async () => {
-        await getPropertiesByCondominiumId(condominiumId)
+    const refreshCommonAreasData = async () => {
+        await getCommonAreasByCondominiumId(condominiumId)
             .then((response) => {
                 const { data } = response
-                setPropertiesData(data)
+                setCommonAreasData(data)
             })
             .catch((error) => {
-                setPropertiesData([])
+                setCommonAreasData([])
             })
             .finally(() => {
 
@@ -58,7 +58,7 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
     useEffect(() => {
 
         startTransition(async () => {
-            await refreshPropertiesData()
+            await refreshCommonAreasData()
         })
 
     }, [])
@@ -70,33 +70,33 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
         }
 
         startTransition(async () => {
-            await refreshPropertiesData()
-            const message = action === 'create' ? 'Se ha creado la propiedad' : 'Se ha actualizado la propiedad'
+            await refreshCommonAreasData()
+            const message = action === 'create' ? 'Se ha creado la zona comun' : 'Se ha actualizado la zona comun'
             openNotification('bottom-end', 'success', '', message)
         })
     }
 
-    const openEditDrawer = (property: Property) => {
-        setPropertySelected(property)
+    const openEditDrawer = (commonArea: CommonArea) => {
+        setCommonAreaSelected(commonArea)
         setIsOpenDrawer(true)
     }
 
-    const openDeleteConfirm = (property: Property) => {
-        setPropertySelected(property)
+    const openDeleteConfirm = (commonArea: CommonArea) => {
+        setCommonAreaSelected(commonArea)
         setIsOpenDeleteConfirm(true)
     }
 
     const deleteProperty = () => {
-        if (propertySelected) {
+        if (commonAreaSelected) {
             setIsOpenDeleteConfirm(false)
             startTransition(async () => {
                 try {
-                    await deletePropertyOnCondominium(propertySelected.id)
-                    await refreshPropertiesData()
-                    setPropertySelected(null)
-                    openNotification('bottom-end', 'success', '', 'Se ha archivado la propiedad')
+                    await deleteCommonAreaOnCondominium(commonAreaSelected.id)
+                    await refreshCommonAreasData()
+                    setCommonAreaSelected(null)
+                    openNotification('bottom-end', 'success', '', 'Se ha archivado la zona comun')
                 } catch (error) {
-                    openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al archivar la propiedad')
+                    openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al archivar la zona comun')
                 }
 
             })
@@ -122,11 +122,11 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
 
     return (
         <div>
-            <PropertyDrawer
+            <CommonAreaDrawer
                 condominiumId={condominiumId}
                 isOpen={isOpenDrawer}
                 setIsOpen={setIsOpenDrawer}
-                propertySelected={propertySelected}
+                commonAreaSelected={commonAreaSelected}
                 refresh={refresh}
             />
             <ConfirmDialog
@@ -134,7 +134,7 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
                 cancelText='Cancelar'
                 confirmText='Confirmar'
                 closable={false}
-                title="Desea eliminar esta propiedad?"
+                title="Desea eliminar esta zona comun?"
                 type='danger'
                 onCancel={() => {
                     setIsOpenDeleteConfirm(false)
@@ -147,7 +147,7 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
                 <Button
                     variant='solid'
                     onClick={() => {
-                        setPropertySelected(null)
+                        setCommonAreaSelected(null)
                         setIsOpenDrawer(true)
                     }}
                     icon={<PiPlus />}
@@ -219,4 +219,4 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
     )
 }
 
-export default PropertiesTable
+export default CommonAreasTable

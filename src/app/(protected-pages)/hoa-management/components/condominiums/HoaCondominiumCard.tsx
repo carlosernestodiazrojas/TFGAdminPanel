@@ -4,14 +4,16 @@ import { Condominium } from "@/@types/condominium"
 import ImageGallery from "@/components/image-gallery/ImageGallery"
 import { Button, Card, Tooltip } from "@/components/ui"
 import { PiBuilding, PiPencil, PiPlus, PiTrash } from "react-icons/pi"
-import { PropertiesContainerDialog } from "../properties/PropertiesContainerDialog"
 import { useState } from "react"
 import { MdPool } from "react-icons/md"
 
+import { PropertiesContainerDialog } from "../properties/PropertiesContainerDialog"
+import { CommonAreasContainerDialog } from "../common-areas/CommonAreasContainerDialog"
 
 export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }) => {
 
     const [propertiesDialogOpen, setPropertiesDialogOpen] = useState<boolean>(false)
+    const [commonAreasDialogOpen, setCommonAreasDialogOpen] = useState<boolean>(false)
 
     const cardFooter = (
         <div className="flex items-center space-x-2">
@@ -22,7 +24,7 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
             </Tooltip>
 
             <Tooltip title="Ver zonas comunes">
-                <Button>
+                <Button onClick={() => setCommonAreasDialogOpen(true)}>
                     <MdPool />
                 </Button>
             </Tooltip>
@@ -64,6 +66,11 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
                 condominiumId={condominium.id}
                 dialogIsOpen={propertiesDialogOpen}
                 setIsOpen={() => setPropertiesDialogOpen(false)}
+            />
+            <CommonAreasContainerDialog
+                condominiumId={condominium.id}
+                dialogIsOpen={commonAreasDialogOpen}
+                setIsOpen={() => setCommonAreasDialogOpen(false)}
             />
             <div className="max-w-xs">
                 <Card
