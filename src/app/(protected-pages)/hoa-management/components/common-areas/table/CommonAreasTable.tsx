@@ -158,8 +158,8 @@ const CommonAreasTable = ({ condominiumId }: { condominiumId: string; }) => {
 
             {isLoading && <CustomLoaderDeep />}
             <div className='max-h-[600] overflow-y-auto'>
-                <Table >
-                    <THead className='sticky top-0'>
+                <table className="table-default table-hover">
+                    <THead className='sticky top-0 bg-white z-20'>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <Tr key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
@@ -213,7 +213,7 @@ const CommonAreasTable = ({ condominiumId }: { condominiumId: string; }) => {
                         })}
 
                     </TBody>
-                </Table>
+                </table>
             </div>
         </div>
     )

@@ -1,4 +1,6 @@
-import { useState, useEffect, useTransition } from 'react'
+'use client'
+
+import { useState, useTransition } from 'react'
 import Table from '@/components/ui/Table'
 import {
     useReactTable,
@@ -6,13 +8,13 @@ import {
     getFilteredRowModel,
     flexRender,
 } from '@tanstack/react-table'
-import { Property } from '@/@types/property'
+import { Announcement } from '@/@types/announcement'
 
-import { PropertiesTableColumns } from './PropertiesTableColumns'
-import PropertyDrawer from '../drawer/PropertyDrawer'
+import { AnnouncementTableColumns } from './AnnouncementsTableColumns'
+import AnnouncementDrawer from '../drawer/AnnouncementDrawer'
 import { Button, toast } from '@/components/ui'
 import { PiPlus } from 'react-icons/pi'
-import { deletePropertyOnCondominium, getPropertiesByCondominiumId } from '../../../actions'
+import { deleteAnnouncementOnHoa } from '../../actions'
 import { CustomLoaderDeep } from '@/components/custom-loader'
 import { BiPencil, BiTrash } from 'react-icons/bi'
 import ConfirmDialog from '@/components/shared/ConfirmDialog'
@@ -20,7 +22,7 @@ import Notification from '@/components/ui/Notification'
 
 const { Tr, Th, Td, THead, TBody } = Table
 
-const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
+const AnnouncementsTable = ({ announcements }: { announcements: Announcement[]; }) => {
 
     const [isLoading, startTransition] = useTransition()
 
@@ -28,75 +30,37 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
 
     const [isOpenDeleteConfirm, setIsOpenDeleteConfirm] = useState<boolean>(false)
 
-    const [propertiesData, setPropertiesData] = useState<Property[]>([])
+    const [announcementSelected, setAnnouncementSelected] = useState<Announcement | null>(null)
 
-    const [propertySelected, setPropertySelected] = useState<Property | null>(null)
-
-    const columns = PropertiesTableColumns()
+    const columns = AnnouncementTableColumns()
 
     const table = useReactTable({
-        data: propertiesData,
+        data: announcements,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel()
     })
 
-    const refreshPropertiesData = async () => {
-        await getPropertiesByCondominiumId(condominiumId)
-            .then((response) => {
-                const { data } = response
-                setPropertiesData(data)
-            })
-            .catch((error) => {
-                setPropertiesData([])
-            })
-            .finally(() => {
-
-            })
-    }
-
-    useEffect(() => {
-
-        startTransition(async () => {
-            await refreshPropertiesData()
-        })
-
-    }, [])
-
-    const refresh = (action: string) => {
-
-        if (action === 'error') {
-            openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al ejecutar la accion')
-        }
-
-        startTransition(async () => {
-            await refreshPropertiesData()
-            const message = action === 'create' ? 'Se ha creado la propiedad' : 'Se ha actualizado la propiedad'
-            openNotification('bottom-end', 'success', '', message)
-        })
-    }
-
-    const openEditDrawer = (property: Property) => {
-        setPropertySelected(property)
+    const openEditDrawer = (announcement: Announcement) => {
+        setAnnouncementSelected(announcement)
         setIsOpenDrawer(true)
     }
 
-    const openDeleteConfirm = (property: Property) => {
-        setPropertySelected(property)
+    const openDeleteConfirm = (announcement: Announcement) => {
+        setAnnouncementSelected(announcement)
         setIsOpenDeleteConfirm(true)
     }
 
-    const deleteProperty = () => {
-        if (propertySelected) {
+    const deleteAnnouncement = () => {
+        if (announcementSelected) {
             setIsOpenDeleteConfirm(false)
             startTransition(async () => {
                 try {
-                    await deletePropertyOnCondominium(propertySelected.id)
-                    await refreshPropertiesData()
-                    setPropertySelected(null)
-                    openNotification('bottom-end', 'success', '', 'Se ha archivado la propiedad')
+                    await deleteAnnouncementOnHoa(announcementSelected.id)
+                    setAnnouncementSelected(null)
+                    openNotification('bottom-end', 'success', '', 'Se ha archivado el anuncio')
                 } catch (error) {
-                    openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al archivar la propiedad')
+                    openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al archivar el anuncio')
                 }
 
             })
@@ -121,13 +85,11 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
     }
 
     return (
-        <div>
-            <PropertyDrawer
-                condominiumId={condominiumId}
+        <>
+            <AnnouncementDrawer
                 isOpen={isOpenDrawer}
                 setIsOpen={setIsOpenDrawer}
-                propertySelected={propertySelected}
-                refresh={refresh}
+                announcementSelected={announcementSelected}
             />
             <ConfirmDialog
                 isOpen={isOpenDeleteConfirm}
@@ -140,14 +102,14 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
                     setIsOpenDeleteConfirm(false)
                 }}
                 onConfirm={() => {
-                    deleteProperty()
+                    deleteAnnouncement()
                 }}
             />
             <div className='flex justify-end'>
                 <Button
                     variant='solid'
                     onClick={() => {
-                        setPropertySelected(null)
+                        setAnnouncementSelected(null)
                         setIsOpenDrawer(true)
                     }}
                     icon={<PiPlus />}
@@ -157,9 +119,9 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
             </div>
 
             {isLoading && <CustomLoaderDeep />}
-            <div className='max-h-[600] overflow-y-auto'>
+            <div className='max-h-[600px] overflow-y-auto'>
                 <table className="table-default table-hover">
-                    <THead className='sticky top-0 bg-white z-20'>
+                    <THead className="sticky top-0 bg-white z-20">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <Tr key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
@@ -167,6 +129,7 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
                                         <Th
                                             key={header.id}
                                             colSpan={header.colSpan}
+
                                         >
                                             {flexRender(
                                                 header.column.columnDef.header,
@@ -178,7 +141,7 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
                             </Tr>
                         ))}
                     </THead>
-                    <TBody>
+                    <TBody >
                         {table.getRowModel().rows.map((row) => {
                             return (
                                 <Tr key={row.id}>
@@ -214,9 +177,9 @@ const PropertiesTable = ({ condominiumId }: { condominiumId: string; }) => {
 
                     </TBody>
                 </table>
-            </div>
-        </div>
+            </div >
+        </>
     )
 }
 
-export default PropertiesTable
+export default AnnouncementsTable
