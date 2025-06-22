@@ -27,6 +27,16 @@ const navigationConfig: NavigationTree[] = [
         authority: ['global_admin'],
         subMenu: [],
     },
+    {
+        key: 'announcements-management',
+        path: '/announcements-management',
+        title: 'Announcements management',
+        translateKey: 'nav.announcements-management',
+        icon: 'home',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['global_admin', 'presidente', 'administrador'],
+        subMenu: [],
+    },
     /** Example purpose only, please remove */
     // {
     //     key: 'singleMenuItem',

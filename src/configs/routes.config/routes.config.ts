@@ -18,6 +18,14 @@ export const protectedRoutes: Routes = {
             pageContainerType: 'contained',
         },
     },
+    '/announcements-management': {
+        key: 'announcements-management',
+        authority: ['global_admin', 'presidente', 'administrador'],
+        meta: {
+            pageBackgroundType: 'plain',
+            pageContainerType: 'contained',
+        },
+    },
 }
 
 export const publicRoutes: Routes = {}
