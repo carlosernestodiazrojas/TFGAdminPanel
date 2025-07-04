@@ -5,9 +5,7 @@ import { NestApiResponse } from '@/@types/nest-api-response'
 import getServerSession from "@/server/actions/auth/getServerSession"
 import { User } from '@/@types/auth'
 
-
 import { AnnouncementFormValues } from '@/app/(protected-pages)/announcements-management/components/form/AnnouncementForm'
-
 
 export async function getAnnouncementsByHoaIdService() {
     const session = await getServerSession()

@@ -67,6 +67,20 @@ const AnnouncementsTable = ({ announcements }: { announcements: Announcement[]; 
         }
     }
 
+    const refresh = (action: string) => {
+
+        if (action === 'error') {
+            openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al ejecutar la accion')
+            return
+        }
+
+        startTransition(async () => {
+            const message = action === 'create' ? 'Se ha creado el anuncio correctamente' : 'Se ha actualizado el anuncio correctamente'
+            openNotification('bottom-end', 'success', '', message)
+            return
+        })
+    }
+
     const openNotification = (
         placement:
             | 'top-start'
@@ -90,13 +104,14 @@ const AnnouncementsTable = ({ announcements }: { announcements: Announcement[]; 
                 isOpen={isOpenDrawer}
                 setIsOpen={setIsOpenDrawer}
                 announcementSelected={announcementSelected}
+                refresh={refresh}
             />
             <ConfirmDialog
                 isOpen={isOpenDeleteConfirm}
                 cancelText='Cancelar'
                 confirmText='Confirmar'
                 closable={false}
-                title="Desea eliminar esta propiedad?"
+                title="Desea eliminar este anuncio?"
                 type='danger'
                 onCancel={() => {
                     setIsOpenDeleteConfirm(false)
