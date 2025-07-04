@@ -26,6 +26,14 @@ export const protectedRoutes: Routes = {
             pageContainerType: 'contained',
         },
     },
+    '/incidences-management': {
+        key: 'incidences-management',
+        authority: ['global_admin', 'presidente', 'administrador'],
+        meta: {
+            pageBackgroundType: 'plain',
+            pageContainerType: 'contained',
+        },
+    },
 }
 
 export const publicRoutes: Routes = {}
