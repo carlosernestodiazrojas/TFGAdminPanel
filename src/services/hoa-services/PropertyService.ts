@@ -24,7 +24,7 @@ export async function createPropertyOnCondominiumIdService(condominiumId: string
     const session = await getServerSession()
     const userAuth = { ...session?.user } as User
     const data = { ...formData, condominium_id: condominiumId }
-    console.log("Lo que va --- ", data)
+
     return await ApiService.fetchDataWithAxios<NestApiResponse>({
         url: `${process.env.API_URL}/properties`,
         method: 'post',
@@ -39,7 +39,6 @@ export async function updatePropertyOnCondominiumService(propertyId: string, for
     const session = await getServerSession()
     const userAuth = { ...session?.user } as User
     const data = { ...formData }
-    console.log("Lo que va --- ", data)
     return await ApiService.fetchDataWithAxios<NestApiResponse>({
         url: `${process.env.API_URL}/properties/${propertyId}`,
         method: 'patch',
