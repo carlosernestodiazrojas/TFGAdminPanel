@@ -37,6 +37,16 @@ const navigationConfig: NavigationTree[] = [
         authority: ['global_admin', 'presidente', 'administrador'],
         subMenu: [],
     },
+    {
+        key: 'incidences-management',
+        path: '/incidences-management',
+        title: 'Gestionar incidencias',
+        translateKey: 'nav.incidences-management',
+        icon: 'incidences',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['global_admin', 'presidente', 'administrador'],
+        subMenu: [],
+    },
     /** Example purpose only, please remove */
     // {
     //     key: 'singleMenuItem',
