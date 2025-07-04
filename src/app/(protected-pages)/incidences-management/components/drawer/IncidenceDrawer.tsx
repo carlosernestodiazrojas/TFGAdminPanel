@@ -77,7 +77,6 @@ const IncidenceDrawer = (
                         })
 
                     } catch (error) {
-                        console.log("Errro", error)
                         refresh("error");
                     }
 

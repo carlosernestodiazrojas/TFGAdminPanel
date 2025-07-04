@@ -16,7 +16,7 @@ const HoaInformationTabs = ({
         <div>
             <Tabs defaultValue="tab1">
                 <TabList>
-                    <TabNav value="tab1">Informacion general</TabNav>
+                    <TabNav value="tab1">Informaci&oacute;n general</TabNav>
                     <TabNav value="tab2">Edificios de la comunidad</TabNav>
                 </TabList>
                 <div className="p-4">

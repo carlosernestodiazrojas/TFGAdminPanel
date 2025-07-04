@@ -17,7 +17,7 @@ const Uploader = ({
         let valid: string | boolean = true
 
         const allowedFileType = ['image/jpeg', 'image/png']
-        const maxFileSize = 500000
+        const maxFileSize = 1048576
 
         if (fileList.length >= maxUpload) {
             return `Solo se admite ${maxUpload} fichero`
@@ -26,11 +26,11 @@ const Uploader = ({
         if (files) {
             for (const f of files) {
                 if (!allowedFileType.includes(f.type)) {
-                    valid = 'Solo ficheros png o jpg!'
+                    valid = 'Solo se admiten imágenes png o jpg!'
                 }
 
                 if (f.size >= maxFileSize) {
-                    valid = 'No se admiten ficheros con tamaño superior a 500kb!'
+                    valid = 'No se admiten ficheros con tamaño superior a 1 MB!'
                 }
             }
         }
@@ -38,7 +38,7 @@ const Uploader = ({
         return valid
     }
 
-    const tip = <p className="mt-2">jpeg o png (max 500kb)</p>
+    const tip = <p className="mt-2">jpeg o png (max 1 MB)</p>
 
     return (
         <div>

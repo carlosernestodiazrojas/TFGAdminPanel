@@ -77,7 +77,7 @@ const AnnouncementDrawer = (
                         })
 
                     } catch (error) {
-                        console.log("Errro", error)
+
                         refresh("error");
                     }
 

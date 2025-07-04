@@ -144,7 +144,7 @@ const Upload = (props: UploadProps) => {
         if (!draggable && !children) {
             return (
                 <Button disabled={disabled} onClick={(e) => e.preventDefault()}>
-                    Seleccionar...
+                    Seleccionar imagen...
                 </Button>
             )
         }

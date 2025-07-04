@@ -10,10 +10,10 @@ const IncidencesContainer = (
         incidences: Incidence[]
     }
 ) => {
-    console.log("Incidencias --- ", incidences)
+
     return (
         <HeaderHoc
-            title="Gestion de incidencias"
+            title="Gesti&oacute;n de incidencias"
             subtitle="Incidencias reportadas en la comunidad"
         >
             <IncidencesTable

@@ -10,10 +10,10 @@ const AnnouncementsContainer = (
         announcements: Announcement[]
     }
 ) => {
-    console.log("Anuncios en el cliente --- ", announcements)
+
     return (
         <HeaderHoc
-            title="Gestion de anuncios"
+            title="Gesti&oacute;n de anuncios"
             subtitle="Listado de anuncios de la comunidad"
         >
             <AnnouncementsTable

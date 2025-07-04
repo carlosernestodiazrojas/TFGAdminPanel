@@ -16,9 +16,6 @@ const validateCredential = async (values: SignInCredential) => {
     }
     const authority: string[] = [data.role]
 
-
-    console.log("Data --- ", data)
-
     const user = {
         id: data.user_id,
         authority,

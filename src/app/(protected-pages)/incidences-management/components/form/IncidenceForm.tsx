@@ -125,7 +125,6 @@ export const IncidenceForm = (
                                 field.onChange(imageUploaded)
                             }}
                             onUploading={(uploading: boolean) => {
-                                console.log("subiendo --- ", uploading)
                                 setNewImageUploaded(true)
                                 setUploading(uploading)
                                 isUploading(uploading)
