@@ -34,6 +34,16 @@ export const protectedRoutes: Routes = {
             pageContainerType: 'contained',
         },
     },
+
+    '/special-assessments-management': {
+        key: 'special-assessments-management',
+        authority: ['global_admin', 'presidente', 'administrador'],
+        meta: {
+            pageBackgroundType: 'plain',
+            pageContainerType: 'contained',
+        },
+    },
+
 }
 
 export const publicRoutes: Routes = {}

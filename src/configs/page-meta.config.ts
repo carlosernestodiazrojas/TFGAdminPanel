@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 const pageMeta: Metadata = {
-    title: 'YourFincApp',
+    title: 'Hola vecino - Admin',
     description:
         '',
     icons: {
