@@ -12,18 +12,21 @@ import { Form } from '@/components/ui';
 
 import { createAnnouncementOnHoa, updateAnnouncementOnHoa } from '../../actions';
 import { Announcement } from '@/@types/announcement';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTransition } from 'react';
 
 const AnnouncementDrawer = (
-    { isOpen, setIsOpen, announcementSelected = null }:
+    { isOpen, setIsOpen, announcementSelected = null, refresh }:
         {
             isOpen: boolean;
             setIsOpen: (open: boolean) => void;
             announcementSelected: Announcement | null
+            refresh: (action: string) => void;
         }) => {
 
     const [isLoading, startTransition] = useTransition()
+
+    const [isUploading, setUploading] = useState<boolean>(false)
 
     const methods = useForm<AnnouncementFormValues>({
         resolver: zodResolver(schema),
@@ -50,22 +53,24 @@ const AnnouncementDrawer = (
 
     const AnnouncementDrawerFooter = (
         <div className="text-right w-full">
-            <Button size="sm" className="mr-2" onClick={closeDrawer} loading={isLoading}>
+            <Button size="sm" className="mr-2" onClick={closeDrawer} loading={isLoading || isUploading}>
                 Cancelar
             </Button>
             <Button
                 size="sm"
                 variant="solid"
-                loading={isLoading}
+                loading={isLoading || isUploading}
                 onClick={methods.handleSubmit(async (data) => {
 
                     try {
                         startTransition(async () => {
                             if (!announcementSelected) {
                                 const response = await createAnnouncementOnHoa(data)
+                                refresh("create");
                             }
                             else {
                                 const response = await updateAnnouncementOnHoa(announcementSelected.id, data)
+                                refresh("update");
                             }
 
                             closeDrawer();
@@ -73,6 +78,7 @@ const AnnouncementDrawer = (
 
                     } catch (error) {
                         console.log("Errro", error)
+                        refresh("error");
                     }
 
                 })}
@@ -98,6 +104,7 @@ const AnnouncementDrawer = (
                 <Form noValidate>
                     <AnnouncementForm
                         announcementSelected={announcementSelected}
+                        isUploading={setUploading}
                     />
                 </Form>
             </Drawer>

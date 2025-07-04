@@ -1,15 +1,19 @@
 
+'use client'
 
 import { Announcement } from '@/@types/announcement';
-import { FormItem, Input } from '@/components/ui';
+import { FormItem, Input, Upload } from '@/components/ui';
 import { Controller, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
 import DatePicker from '@/components/ui/DatePicker'
+import Uploader from '@/components/upload/Uploader';
+import { useState } from 'react';
 
 export const schema = z.object({
     title: z.string({ message: "El titulo es obligatorio" }).min(1, { message: "El titulo es obligatorio" }),
     description: z.string({ message: "La descripcion es obligatoria" }).min(1, { message: "La descripcion es obligatoria" }),
+    file_id: z.string().optional(),
     from: z.preprocess(
         val => {
             if (typeof val === 'object') {
@@ -31,14 +35,18 @@ export const schema = z.object({
 export type AnnouncementFormValues = z.infer<typeof schema>;
 
 export const AnnouncementForm = (
-    { announcementSelected }: {
-        announcementSelected: Announcement | null
+    { announcementSelected, isUploading }: {
+        announcementSelected: Announcement | null; isUploading: (uploading: boolean) => void
     }
 ) => {
 
+    const [newImageUploaded, setNewImageUploaded] = useState<boolean>(false)
+    const [uploading, setUploading] = useState<boolean>(false)
+
     const {
         formState: { errors },
-        control
+        control,
+        getValues
     } = useFormContext<AnnouncementFormValues>();
 
     return (
@@ -125,6 +133,42 @@ export const AnnouncementForm = (
                     }}
                 />
             </FormItem>
+
+            <FormItem
+                label=""
+                invalid={Boolean(errors.file_id)}
+                errorMessage={errors.file_id?.message}
+            >
+                <Controller
+                    name="file_id"
+                    control={control}
+                    render={({ field }) => {
+                        return <Uploader
+                            onUploadResult={(imageUploaded: string) => {
+                                field.onChange(imageUploaded)
+                            }}
+                            onUploading={(uploading: boolean) => {
+                                console.log("subiendo --- ", uploading)
+                                setNewImageUploaded(true)
+                                setUploading(uploading)
+                                isUploading(uploading)
+                            }}
+                        />
+                    }}
+                />
+            </FormItem>
+
+            {announcementSelected && !newImageUploaded && (
+                <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-40 w-full">
+                    <img
+                        src={announcementSelected.imagesUrls.length > 0 ? announcementSelected.imagesUrls[0] : "/img/no-image/3.jpg"}
+                        alt="card header"
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                </div>
+            )}
+
+
         </div>
     )
 }

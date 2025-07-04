@@ -4,6 +4,7 @@
 import { createAnnouncementOnHoaService, deleteAnnouncementOnHoaService, getAnnouncementsByHoaIdService, updateAnnouncementOnHoaService } from "@/services/announcement-services/AnnouncementService"
 import { AnnouncementFormValues } from "./components/form/AnnouncementForm"
 import { revalidatePath } from "next/cache"
+import { uploadFileService } from "@/services/file-services/FileService"
 
 export async function getAnnouncementsByHoaId() {
     const response = await getAnnouncementsByHoaIdService()
@@ -27,3 +28,8 @@ export async function deleteAnnouncementOnHoa(announcementId: string) {
     revalidatePath('/announcements-management')
     return response
 }
+
+export async function uploadFileImage(formData: FormData) {
+    const response = await uploadFileService(formData)
+    return response
+} 

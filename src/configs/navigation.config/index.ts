@@ -10,7 +10,7 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'home',
         path: '/home',
-        title: 'Home',
+        title: 'Principal',
         translateKey: 'nav.home',
         icon: 'home',
         type: NAV_ITEM_TYPE_ITEM,
@@ -20,9 +20,9 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'hoa-management',
         path: '/hoa-management',
-        title: 'Hoa management',
+        title: 'Administrar comunidad',
         translateKey: 'nav.hoa-management',
-        icon: 'home',
+        icon: 'singleMenu',
         type: NAV_ITEM_TYPE_ITEM,
         authority: ['global_admin'],
         subMenu: [],
@@ -30,9 +30,9 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'announcements-management',
         path: '/announcements-management',
-        title: 'Announcements management',
+        title: 'Gestionar anuncios',
         translateKey: 'nav.announcements-management',
-        icon: 'home',
+        icon: 'groupSingleMenu',
         type: NAV_ITEM_TYPE_ITEM,
         authority: ['global_admin', 'presidente', 'administrador'],
         subMenu: [],

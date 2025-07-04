@@ -14,7 +14,7 @@ const AnnouncementsContainer = (
     return (
         <HeaderHoc
             title="Gestion de anuncios"
-            subtitle="okok"
+            subtitle="Listado de anuncios de la comunidad"
         >
             <AnnouncementsTable
                 announcements={announcements}

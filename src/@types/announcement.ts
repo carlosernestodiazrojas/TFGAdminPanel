@@ -5,4 +5,5 @@ export type Announcement = {
     description: string
     from: string
     to: string
+    imagesUrls: string[]
 }
