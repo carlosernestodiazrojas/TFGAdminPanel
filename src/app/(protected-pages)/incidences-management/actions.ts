@@ -19,19 +19,19 @@ export async function getIncidencesByHoaId() {
 
 export async function createIncidenceOnHoa(formData: IncidenceFormValuesNew) {
     const response = await createIncidenceOnHoaService(formData)
-    revalidatePath('/announcements-management')
+    revalidatePath('/incidences-management')
     return response
 }
 
 export async function updateIncidenceOnHoa(announcementId: string, formData: IncidenceFormValues) {
     const response = await updateIncidenceOnHoaService(announcementId, formData)
-    revalidatePath('/announcements-management')
+    revalidatePath('/incidences-management')
     return response
 }
 
 export async function deleteIncidenceOnHoa(announcementId: string) {
     const response = await deleteIncidenceOnHoaService(announcementId)
-    revalidatePath('/announcements-management')
+    revalidatePath('/incidences-management')
     return response
 }
 

@@ -47,6 +47,18 @@ const navigationConfig: NavigationTree[] = [
         authority: ['global_admin', 'presidente', 'administrador'],
         subMenu: [],
     },
+
+    {
+        key: 'special-assessments-management',
+        path: '/special-assessments-management',
+        title: 'Gestionar derramas',
+        translateKey: 'nav.special-assessments-management',
+        icon: 'specialAssessments',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['global_admin', 'presidente', 'administrador'],
+        subMenu: [],
+    },
+
     /** Example purpose only, please remove */
     // {
     //     key: 'singleMenuItem',
