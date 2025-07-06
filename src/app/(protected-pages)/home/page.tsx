@@ -1,10 +1,10 @@
-import { TestClientComponent } from "./components/TestClientComponent"
+import { HoaManagementContainer } from "./components/HoaManagementContainer"
 
-const HomePage = async () => {
-    return <div>
-        <TestClientComponent />
-        Componente servidor de prueba
-    </div>
+const HoaManagementPage = async () => {
+
+    return (
+        <HoaManagementContainer />
+    )
 }
 
-export default HomePage
+export default HoaManagementPage

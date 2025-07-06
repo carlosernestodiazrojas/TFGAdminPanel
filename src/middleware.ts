@@ -26,12 +26,11 @@ export default auth((req) => {
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
-    /** Skip auth middleware for api routes */
     if (isApiAuthRoute) return
 
     if (isAuthRoute) {
         if (isSignedIn) {
-            /** Redirect to authenticated entry path if signed in & path is auth route */
+
             return Response.redirect(
                 new URL(appConfig.authenticatedEntryPath, nextUrl),
             )
@@ -39,7 +38,6 @@ export default auth((req) => {
         return
     }
 
-    /** Redirect to authenticated entry path if signed in & path is public route */
     if (!isSignedIn && !isPublicRoute) {
         let callbackUrl = nextUrl.pathname
         if (nextUrl.search) {

@@ -5,7 +5,7 @@ import ApiService from '../ApiService'
 import { NestApiResponse } from '@/@types/nest-api-response'
 import getServerSession from "@/server/actions/auth/getServerSession"
 import { User } from '@/@types/auth'
-import { CommonAreaFormValues } from '@/app/(protected-pages)/hoa-management/components/common-areas/form/CommonAreaForm'
+import { CommonAreaFormValues } from '@/app/(protected-pages)/home/components/common-areas/form/CommonAreaForm'
 
 
 export async function getCommonAreasByCondominiumIdService(data: GetByIdParam) {

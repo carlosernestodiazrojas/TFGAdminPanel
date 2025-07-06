@@ -5,7 +5,7 @@ import ApiService from '../ApiService'
 import { NestApiResponse } from '@/@types/nest-api-response'
 import getServerSession from "@/server/actions/auth/getServerSession"
 import { User } from '@/@types/auth'
-import { PropertyFormValues } from '@/app/(protected-pages)/hoa-management/components/properties/form/PropertyForm'
+import { PropertyFormValues } from '@/app/(protected-pages)/home/components/properties/form/PropertyForm'
 
 
 export async function getPropertiesByCondominiumIdService(data: GetByIdParam) {
