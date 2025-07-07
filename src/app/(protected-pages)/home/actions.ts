@@ -2,14 +2,22 @@
 'use server'
 
 import { getHoaByIdService } from "@/services/hoa-services/HoaService"
-import { getCondominiumByIdService, getCondominiumsByHoaIdService } from "@/services/hoa-services/CondominiumService"
+import { createCondominiumOnHoaIdService, getCondominiumByIdService, getCondominiumsByHoaIdService, updateCondominiumOnHoaService } from "@/services/hoa-services/CondominiumService"
 import { createPropertyOnCondominiumIdService, deletePropertyOnCondominiumService, getPropertiesByCondominiumIdService, updatePropertyOnCondominiumService } from "@/services/hoa-services/PropertyService"
 import { PropertyFormValues } from "./components/properties/form/PropertyForm"
 import { createCommonAreaOnCondominiumIdService, deleteCommonAreaOnCondominiumService, getCommonAreasByCondominiumIdService, updateCommonAreaOnCondominiumService } from "@/services/hoa-services/CommonAreaService"
 import { CommonAreaFormValues } from "./components/common-areas/form/CommonAreaForm"
 
+import { getUserByIdService } from "@/services/user-services/UserService"
+import { CondominiumFormValues } from "./components/condominiums/form/CondominiumForm"
+
 export async function getHoaById() {
     const response = await getHoaByIdService()
+    return response
+}
+
+export async function getUserById(id: string) {
+    const response = await getUserByIdService(id)
     return response
 }
 
@@ -61,5 +69,16 @@ export async function updateCommonAreaOnCondominium(commonAreaId: string, formDa
 
 export async function deleteCommonAreaOnCondominium(commonAreaId: string) {
     const response = await deleteCommonAreaOnCondominiumService(commonAreaId)
+    return response
+}
+
+
+export async function createCondominiumOnHoaId(formData: CondominiumFormValues) {
+    const response = await createCondominiumOnHoaIdService(formData)
+    return response
+}
+
+export async function updateCondominiumOnHoa(propertyId: string, formData: CondominiumFormValues) {
+    const response = await updateCondominiumOnHoaService(propertyId, formData)
     return response
 }

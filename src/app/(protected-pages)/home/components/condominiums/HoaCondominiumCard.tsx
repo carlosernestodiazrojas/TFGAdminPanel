@@ -2,18 +2,45 @@
 
 import { Condominium } from "@/@types/condominium"
 import ImageGallery from "@/components/image-gallery/ImageGallery"
-import { Button, Card, Tooltip } from "@/components/ui"
+import { Button, Card, toast, Tooltip } from "@/components/ui"
 import { PiBuilding, PiPencil, PiPlus, PiTrash } from "react-icons/pi"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { MdPool } from "react-icons/md"
 
 import { PropertiesContainerDialog } from "../properties/PropertiesContainerDialog"
 import { CommonAreasContainerDialog } from "../common-areas/CommonAreasContainerDialog"
+import CondominiumDrawer from "./drawer/CondominiumDrawer"
 
-export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }) => {
+import Notification from '@/components/ui/Notification'
+
+export const HoaCondominiumCard = (
+    {
+        condominium,
+        hoaId,
+        refresh
+    }: { condominium: Condominium; hoaId: string; refresh: () => void }) => {
+
+    const [isLoading, startTransition] = useTransition()
 
     const [propertiesDialogOpen, setPropertiesDialogOpen] = useState<boolean>(false)
     const [commonAreasDialogOpen, setCommonAreasDialogOpen] = useState<boolean>(false)
+
+    const [condominiumSelected, setCondominiumSelected] = useState<Condominium | null>(null)
+
+    const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false)
+
+    const refreshData = (action: string) => {
+
+        if (action === 'error') {
+            openNotification('bottom-end', 'danger', '', 'Ha ocurrido un error al ejecutar la accion')
+        }
+
+        startTransition(() => {
+            refresh()
+            const message = action === 'create' ? 'Se ha creado el edificio' : 'Se ha actualizado el edificio'
+            openNotification('bottom-end', 'success', '', message)
+        })
+    }
 
     const cardFooter = (
         <div className="flex items-center space-x-2">
@@ -30,17 +57,15 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
             </Tooltip>
 
             <Tooltip title="Editar">
-                <Button>
+                <Button
+                    onClick={() => {
+                        setCondominiumSelected(condominium)
+                        setIsOpenDrawer(true)
+                    }}
+                >
                     <PiPencil />
                 </Button>
             </Tooltip>
-
-            <Tooltip title="Archivar">
-                <Button>
-                    <PiTrash />
-                </Button>
-            </Tooltip>
-
 
         </div>
     )
@@ -60,8 +85,35 @@ export const HoaCondominiumCard = ({ condominium }: { condominium: Condominium }
             />
         </div>)
 
+
+    const openNotification = (
+        placement:
+            | 'top-start'
+            | 'top-center'
+            | 'top-end'
+            | 'bottom-start'
+            | 'bottom-center'
+            | 'bottom-end',
+        type: 'success' | 'warning' | 'danger' | 'info',
+        title: string,
+        message: string,
+    ) => {
+        toast.push(<Notification className='z-[2000]' type={type} title={title}> {message} </Notification>, {
+            placement: placement,
+        })
+    }
+
     return (
         <>
+
+            <CondominiumDrawer
+                hoaId={hoaId}
+                isOpen={isOpenDrawer}
+                setIsOpen={setIsOpenDrawer}
+                condominiumSelected={condominiumSelected}
+                refresh={refreshData}
+            />
+
             <PropertiesContainerDialog
                 condominiumId={condominium.id}
                 dialogIsOpen={propertiesDialogOpen}

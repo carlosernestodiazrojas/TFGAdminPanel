@@ -34,6 +34,19 @@ export const HoaCondominiumsContainer = ({
 
     }, [])
 
+    const refresh = () => {
+        getCondominiumsByHoaId(hoa.id)
+            .then((response) => {
+                const { data } = response
+                setCondominiumsData(data)
+            })
+            .catch((error) => {
+                setCondominiumsData([])
+            })
+            .finally(() => {
+            })
+    }
+
     return (
         <div className="flex space-x-4">
             {isLoading && <CustomLoaderDeeper />}
@@ -41,6 +54,8 @@ export const HoaCondominiumsContainer = ({
                 return <HoaCondominiumCard
                     key={condominium.id}
                     condominium={condominium}
+                    hoaId={hoa.id}
+                    refresh={refresh}
                 />
             })}
         </div>

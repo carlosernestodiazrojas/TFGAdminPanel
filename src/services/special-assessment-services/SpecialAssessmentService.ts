@@ -5,7 +5,7 @@ import { NestApiResponse } from '@/@types/nest-api-response'
 import getServerSession from "@/server/actions/auth/getServerSession"
 import { User } from '@/@types/auth'
 
-import { SpecialAssessmentFormValues, SpecialAssessmentFormValuesNew } from '@/app/(protected-pages)/incidences-management/components/form/SpecialAssessmentForm'
+import { SpecialAssessmentFormValues, SpecialAssessmentFormValuesNew } from '@/app/(protected-pages)/special-assessments-management/components/form/SpecialAssessmentForm'
 
 
 
