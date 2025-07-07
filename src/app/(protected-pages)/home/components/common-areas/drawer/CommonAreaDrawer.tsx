@@ -12,7 +12,7 @@ import { Form } from '@/components/ui';
 
 import { createCommonAreaOnCondominiumId, updateCommonAreaOnCondominium } from '../../../actions';
 import { CommonArea } from '@/@types/common-area';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTransition } from 'react';
 
 const CommonAreaDrawer = (
@@ -26,6 +26,8 @@ const CommonAreaDrawer = (
         }) => {
 
     const [isLoading, startTransition] = useTransition()
+
+    const [isUploading, setUploading] = useState<boolean>(false)
 
     const methods = useForm<CommonAreaFormValues>({
         resolver: zodResolver(schema),
@@ -52,13 +54,13 @@ const CommonAreaDrawer = (
 
     const PropertyDrawerFooter = (
         <div className="text-right w-full">
-            <Button size="sm" className="mr-2" onClick={closeDrawer} loading={isLoading}>
+            <Button size="sm" className="mr-2" onClick={closeDrawer} loading={isLoading || isUploading}>
                 Cancelar
             </Button>
             <Button
                 size="sm"
                 variant="solid"
-                loading={isLoading}
+                loading={isLoading || isUploading}
                 onClick={methods.handleSubmit(async (data) => {
 
                     try {
@@ -102,6 +104,7 @@ const CommonAreaDrawer = (
                 <Form noValidate>
                     <CommonAreaForm
                         commonAreaSelected={commonAreaSelected}
+                        isUploading={setUploading}
                     />
                 </Form>
             </Drawer>

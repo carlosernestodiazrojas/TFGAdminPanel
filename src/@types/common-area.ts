@@ -6,4 +6,5 @@ export type CommonArea = {
     is_deleted: boolean
     is_bookable: boolean
     daily_capacity: number
+    imagesUrls: string[]
 }
