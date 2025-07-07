@@ -8,8 +8,15 @@ import { PropertyFormValues } from "./components/properties/form/PropertyForm"
 import { createCommonAreaOnCondominiumIdService, deleteCommonAreaOnCondominiumService, getCommonAreasByCondominiumIdService, updateCommonAreaOnCondominiumService } from "@/services/hoa-services/CommonAreaService"
 import { CommonAreaFormValues } from "./components/common-areas/form/CommonAreaForm"
 
+import { getUserByIdService } from "@/services/user-services/UserService"
+
 export async function getHoaById() {
     const response = await getHoaByIdService()
+    return response
+}
+
+export async function getUserById(id: string) {
+    const response = await getUserByIdService(id)
     return response
 }
 
