@@ -20,30 +20,9 @@ export const HoaInformation = ({
     const [president, setPresident] = useState<UserResponse | null>(null)
     const [admin, setAdmin] = useState<UserResponse | null>(null)
 
-
-    // useEffect(() => {
-    //     startTransition(async () => {
-    //         const { president_id, admin_id } = hoa
-
-    //         console.log(hoa.statistics)
-
-    //         if (president_id) {
-    //             const response = await getUserById(president_id)
-    //             setPresident(response.data)
-    //         }
-
-    //         if (admin_id) {
-    //             const response = await getUserById(admin_id)
-    //             setAdmin(response.data)
-    //         }
-    //     })
-    // }, [])
-
     useEffect(() => {
         startTransition(async () => {
             const { president_id, admin_id } = hoa
-
-            console.log(hoa.statistics)
 
             const promises = []
 
