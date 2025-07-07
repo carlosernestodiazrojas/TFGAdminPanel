@@ -2,6 +2,8 @@
 
 import { CommonArea } from '@/@types/common-area';
 import { Checkbox, FormItem, Input } from '@/components/ui';
+import Uploader from '@/components/upload/Uploader';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -9,6 +11,7 @@ export const schema = z.object({
     name: z.string({ message: "El nombre es obligatorio" }).min(1, { message: "El nombre es obligatorio" }),
     description: z.string({ message: "La descripcion es obligatoria" }).min(1, { message: "La descripcion es obligatoria" }),
     is_bookable: z.boolean().optional().default(false),
+    file_id: z.string().optional(),
     daily_capacity: z.preprocess(
         val => {
             if (typeof val === 'string' && val.trim() !== '') {
@@ -22,10 +25,13 @@ export const schema = z.object({
 export type CommonAreaFormValues = z.infer<typeof schema>;
 
 export const CommonAreaForm = (
-    { commonAreaSelected }: {
-        commonAreaSelected: CommonArea | null
+    { commonAreaSelected, isUploading }: {
+        commonAreaSelected: CommonArea | null; isUploading: (uploading: boolean) => void
     }
 ) => {
+
+    const [newImageUploaded, setNewImageUploaded] = useState<boolean>(false)
+    const [uploading, setUploading] = useState<boolean>(false)
 
     const {
         formState: { errors },
@@ -104,6 +110,39 @@ export const CommonAreaForm = (
                     }
                 />
             </FormItem>
+
+            <FormItem
+                label=""
+                invalid={Boolean(errors.file_id)}
+                errorMessage={errors.file_id?.message}
+            >
+                <Controller
+                    name="file_id"
+                    control={control}
+                    render={({ field }) => {
+                        return <Uploader
+                            onUploadResult={(imageUploaded: string) => {
+                                field.onChange(imageUploaded)
+                            }}
+                            onUploading={(uploading: boolean) => {
+                                setNewImageUploaded(true)
+                                setUploading(uploading)
+                                isUploading(uploading)
+                            }}
+                        />
+                    }}
+                />
+            </FormItem>
+
+            {commonAreaSelected && !newImageUploaded && (
+                <div className="relative rounded-tl-lg rounded-tr-lg overflow-hidden h-40 w-full">
+                    <img
+                        src={commonAreaSelected.imagesUrls.length > 0 ? commonAreaSelected.imagesUrls[0] : "/img/no-image/3.jpg"}
+                        alt="card header"
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                </div>
+            )}
 
         </div>
     )
