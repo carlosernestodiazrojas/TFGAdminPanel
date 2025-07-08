@@ -50,6 +50,18 @@ const navigationConfig: NavigationTree[] = [
     },
 
 
+    {
+        key: 'users-management',
+        path: '/users-management',
+        title: 'Gestionar usuarios',
+        translateKey: 'nav.users-management',
+        icon: 'specialAssessments',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['global_admin', 'presidente', 'administrador'],
+        subMenu: [],
+    },
+
+
 ]
 
 export default navigationConfig

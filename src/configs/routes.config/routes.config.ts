@@ -37,6 +37,15 @@ export const protectedRoutes: Routes = {
         },
     },
 
+    '/users-management': {
+        key: 'users-management',
+        authority: ['global_admin'],
+        meta: {
+            pageBackgroundType: 'plain',
+            pageContainerType: 'contained',
+        },
+    },
+
 }
 
 export const publicRoutes: Routes = {}

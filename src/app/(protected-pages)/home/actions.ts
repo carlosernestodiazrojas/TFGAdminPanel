@@ -26,8 +26,8 @@ export async function getCondominiumById(id: string) {
     return response
 }
 
-export async function getCondominiumsByHoaId(id: string) {
-    const response = await getCondominiumsByHoaIdService({ id })
+export async function getCondominiumsByHoaId() {
+    const response = await getCondominiumsByHoaIdService()
     return response
 }
 
