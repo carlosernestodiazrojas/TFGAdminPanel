@@ -20,7 +20,7 @@ export const HoaCondominiumsContainer = ({
     useEffect(() => {
 
         startTransition(() => {
-            getCondominiumsByHoaId(hoa.id)
+            getCondominiumsByHoaId()
                 .then((response) => {
                     const { data } = response
                     setCondominiumsData(data)
@@ -35,7 +35,7 @@ export const HoaCondominiumsContainer = ({
     }, [])
 
     const refresh = () => {
-        getCondominiumsByHoaId(hoa.id)
+        getCondominiumsByHoaId()
             .then((response) => {
                 const { data } = response
                 setCondominiumsData(data)

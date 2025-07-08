@@ -19,11 +19,11 @@ export async function getCondominiumByIdService(data: GetByIdParam) {
     })
 }
 
-export async function getCondominiumsByHoaIdService(data: GetByIdParam) {
+export async function getCondominiumsByHoaIdService() {
     const session = await getServerSession()
     const userAuth = { ...session?.user } as User
     return await ApiService.fetchDataWithAxios<NestApiResponse>({
-        url: `${process.env.API_URL}/condominiums/allByHoa/${data.id}`,
+        url: `${process.env.API_URL}/condominiums/allByHoa/${userAuth.hoaId}`,
         method: 'get',
         headers: {
             Authorization: `Bearer ${userAuth.accessToken}`,

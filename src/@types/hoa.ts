@@ -51,7 +51,7 @@ export interface HoaSummary {
     };
 }
 
-interface Role {
+export interface Role {
     id: string;
     code: number;
     name: string;
