@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2025 Carlos Ernesto Diaz Rojas
+ * Licencia GPL-3.0 *
+ * Trabajo de fin de estudio
+ * Grado en Ingeniería informática, UNIR
+ */
+
 import Alert from '@/components/ui/Alert'
 import OtpVerificationForm from './OtpVerificationForm'
 import sleep from '@/utils/sleep'

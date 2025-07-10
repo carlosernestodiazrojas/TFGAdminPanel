@@ -1,16 +1,23 @@
+/*
+ * Copyright (C) 2025 Carlos Ernesto Diaz Rojas
+ * Licencia GPL-3.0 *
+ * Trabajo de fin de estudio
+ * Grado en Ingeniería informática, UNIR
+ */
+
 export type HorizontalMenuMeta =
     | {
-          layout: 'default'
-      }
+        layout: 'default'
+    }
     | {
-          layout: 'columns'
-          showColumnTitle?: boolean
-          columns: 1 | 2 | 3 | 4 | 5
-      }
+        layout: 'columns'
+        showColumnTitle?: boolean
+        columns: 1 | 2 | 3 | 4 | 5
+    }
     | {
-          layout: 'tabs'
-          columns: 1 | 2 | 3 | 4 | 5
-      }
+        layout: 'tabs'
+        columns: 1 | 2 | 3 | 4 | 5
+    }
 
 export interface NavigationTree {
     key: string

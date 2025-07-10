@@ -1,4 +1,9 @@
-
+/*
+ * Copyright (C) 2025 Carlos Ernesto Diaz Rojas
+ * Licencia GPL-3.0 *
+ * Trabajo de fin de estudio
+ * Grado en Ingeniería informática, UNIR
+ */
 
 import { Condominium } from '@/@types/condominium';
 import { Checkbox, FormItem, Input } from '@/components/ui';
