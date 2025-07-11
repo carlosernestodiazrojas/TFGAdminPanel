@@ -13,6 +13,9 @@ import { useEffect, useState, useTransition } from "react"
 import { Condominium } from "@/@types/condominium"
 import { HoaCondominiumCard } from "./HoaCondominiumCard"
 import { CustomLoaderDeeper } from "@/components/custom-loader"
+import CondominiumDrawer from "./drawer/CondominiumDrawer"
+import { Button } from "@/components/ui"
+import { PiPlus } from "react-icons/pi"
 
 export const HoaCondominiumsContainer = ({
     hoa
@@ -23,6 +26,8 @@ export const HoaCondominiumsContainer = ({
     const [isLoading, startTransition] = useTransition()
 
     const [condominiumsData, setCondominiumsData] = useState<Condominium[]>([])
+
+    const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false)
 
     useEffect(() => {
 
@@ -55,17 +60,38 @@ export const HoaCondominiumsContainer = ({
     }
 
     return (
-        <div className="flex space-x-4">
-            {isLoading && <CustomLoaderDeeper />}
-            {condominiumsData.map((condominium) => {
-                return <HoaCondominiumCard
-                    key={condominium.id}
-                    condominium={condominium}
+        <>
+            <Button
+                variant='solid'
+                onClick={() => {
+                    setIsOpenDrawer(true)
+                }}
+                icon={<PiPlus />}
+                className="mb-4"
+            >
+                <span>Crear</span>
+            </Button>
+            <div className="flex space-x-4">
+                {isLoading && <CustomLoaderDeeper />}
+
+                <CondominiumDrawer
                     hoaId={hoa.id}
+                    isOpen={isOpenDrawer}
+                    setIsOpen={setIsOpenDrawer}
+                    condominiumSelected={null}
                     refresh={refresh}
                 />
-            })}
-        </div>
+
+                {condominiumsData.map((condominium) => {
+                    return <HoaCondominiumCard
+                        key={condominium.id}
+                        condominium={condominium}
+                        hoaId={hoa.id}
+                        refresh={refresh}
+                    />
+                })}
+            </div>
+        </>
 
     )
 }
