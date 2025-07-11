@@ -24,8 +24,8 @@ Antes de comenzar, asegúrate de tener instalado:
 
 1. **Clona el repositorio**
    ```bash
-   git clone [URL_DEL_REPOSITORIO]
-   cd [NOMBRE_DEL_PROYECTO]
+   git clone https://github.com/carlosernestodiazrojas/TFGAdminPanel.git
+   cd TFGAdminPanel
    ```
 
 2. **Configura las variables de entorno**
