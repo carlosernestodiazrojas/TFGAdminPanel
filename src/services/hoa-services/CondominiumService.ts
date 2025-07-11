@@ -41,7 +41,7 @@ export async function getCondominiumsByHoaIdService() {
 export async function createCondominiumOnHoaIdService(formData: CondominiumFormValues) {
     const session = await getServerSession()
     const userAuth = { ...session?.user } as User
-    const data = { ...formData }
+    const data = { ...formData, hoa_id: userAuth.hoaId }
 
     return await ApiService.fetchDataWithAxios<NestApiResponse>({
         url: `${process.env.API_URL}/condominiums`,

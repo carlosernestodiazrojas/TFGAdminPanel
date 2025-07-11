@@ -66,10 +66,11 @@ export const HoaCondominiumsContainer = ({
                 onClick={() => {
                     setIsOpenDrawer(true)
                 }}
-                    icon={<PiPlus />}
-                >
-                                <span>Crear</span>
-                            </Button>
+                icon={<PiPlus />}
+                className="mb-4"
+            >
+                <span>Crear</span>
+            </Button>
             <div className="flex space-x-4">
                 {isLoading && <CustomLoaderDeeper />}
 
