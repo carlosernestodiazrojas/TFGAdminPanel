@@ -24,6 +24,7 @@ import { uploadFileService } from "@/services/file-services/FileService"
 
 export async function getUsersByHoaId() {
     const response = await getUsersByHoaIdService()
+    console.log("response --- ", response)
     return response
 }
 
