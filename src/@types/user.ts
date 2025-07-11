@@ -14,6 +14,7 @@ export interface UserResponse {
     password: string;
     name: string;
     last_name: string;
+    active: boolean;
     role: Role;
     hoa: Hoa | null;
     property: Property | null;

@@ -14,7 +14,8 @@ import {
     updateUserOnHoaService,
     changePasswordService,
     updateUserPropertyService,
-    resetPasswordService
+    resetPasswordService,
+    toggleUserActiveService
 } from "@/services/user-services/UserService"
 
 import { UserFormValues, UserFormValuesNew } from "./components/form/UsersForm"
@@ -59,4 +60,10 @@ export async function resetPassword(userId: string, formData: { newPass: string 
 export async function uploadFileImage(formData: FormData) {
     const response = await uploadFileService(formData)
     return response
-} 
+}
+
+export async function toggleUserActive(userId: string) {
+    const response = await toggleUserActiveService(userId)
+    revalidatePath('/users-management')
+    return response
+}
