@@ -23,7 +23,7 @@ import { Button, toast } from '@/components/ui'
 import { PiPlus } from 'react-icons/pi'
 import { CustomLoaderDeep } from '@/components/custom-loader'
 import { BiPencil, BiTrash, BiBuilding } from 'react-icons/bi'
-import { MdPassword } from 'react-icons/md'
+import { MdBlock, MdPassword, MdVisibility } from 'react-icons/md'
 import Notification from '@/components/ui/Notification'
 import { Condominium } from '@/@types/condominium'
 
@@ -31,7 +31,8 @@ import AssignProperty from '../assign-property/AssignProperty'
 import ChangePassword, { PasswordFormValues } from '../change-password/ChangePassword'
 import { Property } from '@/@types/property'
 
-import { changePassword, resetPassword, updateUserProperty } from '../../actions'
+import { changePassword, resetPassword, toggleUserActive, updateUserProperty } from '../../actions'
+import ConfirmDialog from '@/components/shared/ConfirmDialog'
 
 const { Tr, Th, Td, THead, TBody } = Table
 
@@ -44,6 +45,8 @@ const UsersTable = ({ users, condominiums }: { users: UserResponse[]; condominiu
     const [isOpenAssignPropertyConfirm, setIsOpenAssignPropertyConfirm] = useState<boolean>(false)
 
     const [isOpenChangePasswordConfirm, setIsOpenChangePasswordConfirm] = useState<boolean>(false)
+
+    const [isOpenToggleConfirm, setIsOpenToggleConfirm] = useState<boolean>(false)
 
     const [userSelected, setUserSelected] = useState<UserResponse | null>(null)
 
@@ -69,6 +72,11 @@ const UsersTable = ({ users, condominiums }: { users: UserResponse[]; condominiu
     const openChangePasswordModal = (user: UserResponse) => {
         setUserSelected(user)
         setIsOpenChangePasswordConfirm(true)
+    }
+
+    const openToggleConfirmModal = (user: UserResponse) => {
+        setUserSelected(user)
+        setIsOpenToggleConfirm(true)
     }
 
 
@@ -129,6 +137,17 @@ const UsersTable = ({ users, condominiums }: { users: UserResponse[]; condominiu
         }
     }
 
+    const onToogleUserActive = async () => {
+        if (userSelected) {
+            const response = await toggleUserActive(userSelected?.id)
+            const { success } = response
+            if (success) {
+                setIsOpenToggleConfirm(false)
+                openNotification('bottom-end', 'success', '', 'Se ha cambiado el estado del usuario')
+            }
+        }
+    }
+
     return (
         <>
             <UserDrawer
@@ -150,6 +169,21 @@ const UsersTable = ({ users, condominiums }: { users: UserResponse[]; condominiu
                 dialogIsOpen={isOpenChangePasswordConfirm}
                 onDialogClose={() => setIsOpenChangePasswordConfirm(false)}
                 onDialogOk={onChangePassword}
+            />
+
+            <ConfirmDialog
+                isOpen={isOpenToggleConfirm}
+                cancelText='Cancelar'
+                confirmText='Confirmar'
+                closable={false}
+                title={userSelected?.active ? 'Desea dsactivar el usuario?' : 'Desea activar el usuario'}
+                type='danger'
+                onCancel={() => {
+                    setIsOpenToggleConfirm(false)
+                }}
+                onConfirm={() => {
+                    onToogleUserActive()
+                }}
             />
 
             <div className='flex justify-end'>
@@ -210,6 +244,15 @@ const UsersTable = ({ users, condominiums }: { users: UserResponse[]; condominiu
                                         >
                                             <BiPencil />
                                         </Button>
+
+                                        <Button
+                                            onClick={() => {
+                                                openToggleConfirmModal(row.original)
+                                            }}
+                                        >
+                                            {row.original.active ? <MdBlock /> : <MdVisibility />}
+                                        </Button>
+
                                         <Button
                                             onClick={() => {
                                                 openChangePasswordModal(row.original)

@@ -105,3 +105,15 @@ export async function resetPasswordService(userId: string, formData: { newPass: 
         },
     })
 }
+
+export async function toggleUserActiveService(userId: string) {
+    const session = await getServerSession()
+    const userAuth = { ...session?.user } as User
+    return await ApiService.fetchDataWithAxios<NestApiResponse>({
+        url: `${process.env.API_URL}/users/${userId}/toggle_active`,
+        method: 'patch',
+        headers: {
+            Authorization: `Bearer ${userAuth.accessToken}`,
+        },
+    })
+}
